@@ -7,20 +7,22 @@ const uuidv1 = require('uuid/v1');
 router.post("/", function (req, res) {
     const data = req.body;
 
-    const sessionId = data.sessionId || uuidv1();
+    const context = data['context'];
+    const aiProvider = data['aiProvider'];
+    const userData = data['data'];
 
-    console.log(uuidv1());
+    // Read the configuration for validation rules and apply validation on properties.
+    // If validation rules fails, return the error context and terminate the request.
 
-    var apiai = bot(data.accessToken);
+    const sessionId = aiProvider['sessionId'] || uuidv1();
+    var apiai = bot(aiProvider['accessToken']);
 
-    var request = apiai.textRequest(data.query, {
+    var request = apiai.textRequest(userData['queryText'], {
         sessionId: sessionId
     });
 
     request.on('response', function (response) {
-        console.log(response);
-
-        // Validation will go here for the required field.
+        // Validation on Score and further API call decision.
         res.send(response);
     });
 

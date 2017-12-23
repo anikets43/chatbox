@@ -1,0 +1,148 @@
+
+Request Headers
+---------------
+
+Content-Type: application/json
+AUTH_TYPE: OAUTH
+AUTH_TOKEN_TYPE: Bearer
+AUTH_TOKEN: pO0h00ktqVGFbpkz0WyfzLzihl7hHDOqsF6F7ljM8hFmf6HDyT
+
+Request Json
+------------
+
+{
+	"query": "What is weather tomorrow",
+	"accessToken":"1ad63cf8092a4bcd9223e3827a30836d",
+	"sessionId": ""
+}
+
+{
+	"context": {
+		"timestamp": "2017-11-23T19:20:30-05:00",
+		"version": "1.0"
+	},
+	"aiProvider": {
+		"type": "dialogflow",
+		"accessToken": "1ad63cf8092a4bcd9223e3827a30836d",
+		"sessionId": ""
+	},
+	"data": {
+		"orgId": "",
+		"userId": "",
+		"queryText": "What is weather tomorrow"
+	}
+}
+
+Response Json
+-------------
+
+{
+	"context": {
+		"timestamp": "2017-11-23T19:20:30-05:00",
+		"version": "1.0"
+	},
+	"result": {
+		"message": "success",
+		"statusCode": "XYZ123",
+		"error": {
+			"errorType": "",
+			"errorDetails": ""
+		}
+	},
+	"output": {
+		//Rest API Output
+	},
+	"aiResponse": {
+		"aiEngine": "dialogflow",
+		"response": {
+			"id": "b02dc87f-0214-4166-a69f-3275121d5a22",
+			"timestamp": "2017-12-07T15:52:29.271Z",
+			"lang": "en",
+			"result": {
+				"source": "agent",
+				"resolvedQuery": "What is weather i  Delhi",
+				"action": "",
+				"actionIncomplete": true,
+				"parameters": {
+					"date": "",
+					"geo-city": ""
+				},
+				"contexts": [{
+					"name": "weather_dialog_params_geo-city",
+					"parameters": {
+						"date": "",
+						"geo-city": "",
+						"date.original": "",
+						"geo-city.original": ""
+					},
+					"lifespan": 1
+				}, {
+					"name": "weather_dialog_context",
+					"parameters": {
+						"date": "",
+						"geo-city": "",
+						"date.original": "",
+						"geo-city.original": ""
+					},
+					"lifespan": 2
+				}, {
+					"name": "3b855eb8-cee4-4652-a595-b28f2dba1ef3_id_dialog_context",
+					"parameters": {
+						"date": "",
+						"geo-city": "",
+						"date.original": "",
+						"geo-city.original": ""
+					},
+					"lifespan": 2
+				}],
+				"metadata": {
+					"intentId": "3b855eb8-cee4-4652-a595-b28f2dba1ef3",
+					"webhookUsed": "false",
+					"webhookForSlotFillingUsed": "false",
+					"intentName": "weather"
+				},
+				"fulfillment": {
+					"speech": "For which city do you want to know the weather",
+					"messages": [{
+						"type": 0,
+						"speech": "For which city do you want to know the weather"
+					}]
+				},
+				"score": 0.8700000047683716
+			},
+			"status": {
+				"code": 200,
+				"errorType": "success",
+				"webhookTimedOut": false
+			},
+			"sessionId": "a0e419e0-db66-11e7-aca9-09fce1be7e30"
+		}
+	}
+}
+
+
+
+Google 
+Github
+Dialogflow
+Heroku
+
+
+
+
+1. oAuth API on heroku
+2. Query API Request/Response Struture
+3. Request Validator (Param validation, and oAuth validation)
+4. Dialogflow Client
+5. AI Response Parser
+6. Backend Service Selector (from MongoDB)
+7. Backend Service Client (Rest Client)
+8. Output formatter (from MongoDB, verbose will be fetched)
+
+
+
+
+
+
+
+yyyy-MM-dd'T'HH:mm:ssZZZ
