@@ -16,5 +16,9 @@
     "apiai": "^4.0.3",
     "random-number": "0.0.9",
     "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "nodemon": "^1.14.3"
   }
 }

@@ -1,0 +1,28 @@
+[
+	{
+	property:'aiprovider',
+	validationRules:[
+		{
+		required: true,,
+		errmessage:'Specify aiproivde'
+		},
+		{
+		datatye:'string',
+		errMessage:''
+		}
+	]
+	},
+	{
+	property:'sessionId',
+	validationRules:[
+		{
+		required: true,,
+		errmessage:'Specify aiproivde'
+		},
+		{
+		datatye:'string',
+		errMessage:''
+		}
+	]
+}
+]
