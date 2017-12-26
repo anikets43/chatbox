@@ -3,7 +3,7 @@ var router = express.Router();
 var bot = require('apiai');
 
 var requestParser = require('../components/request/parser');
-
+const processResponse = require('../components/response/responseHandler');
 const uuidv1 = require('uuid/v1');
 
 router.post("/", function (req, res) {
@@ -32,7 +32,8 @@ router.post("/", function (req, res) {
 
         request.on('response', function (response) {
             // Validation on Score and further API call decision.
-            res.send(response);
+            const result = processResponse(req, response);
+            res.send(result);
         });
 
         request.on('error', function (error) {
