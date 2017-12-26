@@ -7,8 +7,8 @@ const compression = require('compression')
 const bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-// const expressValidator = require('express-validator');
-// const expressSession = require('express-session');
+var validator = require('express-validator');
+var session = require('express-session');
 const config = require('./config');
 const db = require('./database');
 
@@ -16,7 +16,7 @@ const index = require('./routes/index');
 const query = require('./routes/query');
 
 const app = express();
-const dbUrl = config.db.uri
+const dbUrl = config.db.uri;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -27,7 +27,8 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(expressValidator);
+app.use(validator());
+app.use(session({ secret: 'max', saveUninitialized: false, resave: false }));
 // app.use(expressSession({ secret: 'max', saveUninitialized: false, resave: false }));
 
 app.use(cookieParser());

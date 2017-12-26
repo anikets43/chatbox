@@ -2,16 +2,16 @@
 	"field": {
 		"validation": [
 			{
-				"name": "$.context.timestamp",
-				"type": "MANDATORY"
+				"name": "context.timestamp",
+				"type": "required"
 			},
 			{
-				"name": "$.aiProvider.accessToken",
-				"type": "MANDATORY,HASH"
+				"name": "aiProvider.accessToken",
+				"type": "required,hash"
 			},
 			{
-				"name": "$.data.orgId",
-				"type": "MANDATORY,ALPHANUM"
+				"name": "data.orgId",
+				"type": "required,alphanumeric"
 			}
 		]
 	}
