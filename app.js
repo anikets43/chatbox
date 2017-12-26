@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
-const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const compression = require('compression')
 const bodyParser = require('body-parser');
@@ -12,11 +11,21 @@ var session = require('express-session');
 const config = require('./config');
 const db = require('./database');
 
+var logger = require("./utils/logger");
+
 const index = require('./routes/index');
 const query = require('./routes/query');
 
 const app = express();
+logger.debug("Enabling GZip compression.");
+
+app.use(compression({
+  threshold: 512
+}));
+
 const dbUrl = config.db.uri;
+
+logger.debug("Setting 'Jade' as view engine");
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -24,7 +33,9 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-app.use(logger('dev'));
+logger.debug("Overriding 'Express' logger");
+app.use(require('morgan')({ "stream": logger.stream }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());
@@ -36,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 
-console.log('Connecting to:', dbUrl)
+logger.debug("Configuring MongoDB");
 db.connect(dbUrl)
   .then(() => {
     console.log('Connected to Mongo DB!')
@@ -59,6 +70,8 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
+  logger.error(err.message);
+
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
