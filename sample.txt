@@ -1,4 +1,32 @@
 
+{
+  "field": {
+    "validation": [{
+        "name": "$.context.timestamp",
+        "type": "MANDATORY"
+      },
+      {
+        "name": "$.aiProvider.accessToken",
+        "type": "MANDATORY,HASH"
+      },
+      {
+        "name": "$.data.orgId",
+        "type": "MANDATORY,ALPHANUM"
+      }
+    ]
+  }
+}
+
+
+REQUIRED
+NUM (1) (1.0)
+HASH (aaa-111-1222asa) 
+ALPHANUM (apaccss12121) 
+DATE()
+
+
+for we will support only AND condition ..
+
 Request Headers
 ---------------
 

@@ -2,10 +2,15 @@ var express = require('express');
 var router = express.Router();
 var bot = require('apiai');
 
+var requestParser = require('../components/request/parser');
+
 const uuidv1 = require('uuid/v1');
 
 router.post("/", function (req, res) {
     const data = req.body;
+    
+    requestParser.parse(req.body);
+    
 
     const context = data['context'];
     const aiProvider = data['aiProvider'];

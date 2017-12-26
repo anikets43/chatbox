@@ -1,28 +1,18 @@
-[
-	{
-		"property": "aiprovider",
-		"validationRules": [
+{
+	"field": {
+		"validation": [
 			{
-				"required": true,
-				"errmessage": "Specify aiproivde"
+				"name": "$.context.timestamp",
+				"type": "MANDATORY"
 			},
 			{
-				"datatye": "string",
-				"errMessage": ""
-			}
-		]
-	},
-	{
-		"property": "sessionId",
-		"validationRules": [
-			{
-				"required": true,
-				"errmessage": "Specify aiproivde"
+				"name": "$.aiProvider.accessToken",
+				"type": "MANDATORY,HASH"
 			},
 			{
-				"datatye": "string",
-				"errMessage": ""
+				"name": "$.data.orgId",
+				"type": "MANDATORY,ALPHANUM"
 			}
 		]
 	}
-]
+}
