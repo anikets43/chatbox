@@ -1,17 +1,28 @@
 const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
 
+// Refer for default validators '../../node_modules/express-validator/shared-typings.d.ts'
+
 function customValidator(request, jsonPath, rules) {
 
     rules.forEach(rule => {
         switch (rule) {
+
             case 'required':
-                debugger;
-                request.check(jsonPath).isEmpty();
+                request.check(jsonPath).exists();
                 parseErrors(request);
                 break;
 
             case 'hash':
+                request.check(jsonPath).isAlphanumeric();
+                break;
+
+            case 'number':
+                request.check(jsonPath).matches(/\d/);
+                break;
+
+            case 'email':
+                request.check(jsonPath).isEmail();
                 break;
 
             default:
@@ -27,7 +38,7 @@ function parseErrors(req) {
     if (errors) {
         req.session.errors = errors;
         req.session.success = false;
-       // res.send(errors);
+        // res.send(errors);
     } else {
         req.session.success = true;
     }

@@ -38,6 +38,8 @@ router.post("/", function (req, res) {
         request.on('error', function (error) {
             console.log(error);
         });
+
+        request.end();
     }
 });
 
