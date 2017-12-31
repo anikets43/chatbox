@@ -9,20 +9,23 @@ function customValidator(request, jsonPath, rules) {
         switch (rule) {
 
             case 'required':
-                request.check(jsonPath).exists();
+                request.check(jsonPath).notEmpty();
                 parseErrors(request);
                 break;
 
             case 'hash':
                 request.check(jsonPath).isAlphanumeric();
+                parseErrors(request);
                 break;
 
             case 'number':
                 request.check(jsonPath).matches(/\d/);
+                parseErrors(request);
                 break;
 
             case 'email':
                 request.check(jsonPath).isEmail();
+                parseErrors(request);
                 break;
 
             default:

@@ -12,8 +12,10 @@ router.post("/", function (req, res) {
     const requestResult = requestParser.parse(req);
 
     const errors = req.validationErrors();
+
     if (errors) {
-        res.send(errors);
+        const result = processResponse(req, errors, false);
+        res.send(result);
     } else {
         const context = data['context'];
         const aiProvider = data['aiProvider'];
@@ -23,22 +25,27 @@ router.post("/", function (req, res) {
         // Read the configuration for validation rules and apply validation on properties.
         // If validation rules fails, return the error context and terminate the request.
 
+        // Checks for active session or generate new session id
         const sessionId = aiProvider['sessionId'] || uuidv1();
         var apiai = bot(aiProvider['accessToken']);
 
+        // Calls DialogFlow API after data validation is done
         var request = apiai.textRequest(userData['queryText'], {
             sessionId: sessionId
         });
 
+        // Callback on request process
         request.on('response', function (response) {
             // Validation on Score and further API call decision.
-            const result = processResponse(req, response);
+            const result = processResponse(req, response, true);
             res.send(result);
         });
 
+        // Callback on Server Error
         request.on('error', function (error) {
-            res.send(error);
-            throw new Error();
+            const result = processResponse(req, error, false);
+            res.send(result);
+            //throw new Error(error.responseBody);
         });
 
         request.end();

@@ -1,3 +1,0 @@
-{"level":"info","message":"::1 - - [Tue, 26 Dec 2017 18:48:30 GMT] \"POST /query HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36\"\n","timestamp":"00:18:30"}
-{"level":"error","message":"'clientAccessToken' cannot be empty.","timestamp":"00:18:47"}
-{"level":"info","message":"::1 - - [Tue, 26 Dec 2017 18:48:47 GMT] \"POST /query HTTP/1.1\" 500 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36\"\n","timestamp":"00:18:47"}

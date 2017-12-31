@@ -3,10 +3,8 @@ const validator = require('./validators');
 
 function parse(request) {
     const requestData = request.body;
-
     for (const key in requestData) {
         for (const keyofKey in requestData[key]) {
-            debugger;
             const jsonPath = `${key}.${keyofKey}`;
             var validationObject = config.field.validation.find(x => x.name == jsonPath);
 
@@ -16,7 +14,7 @@ function parse(request) {
 
                 // const data = requestData[key][keyofKey];
 
-                return validator.customValidator(request, jsonPath, rules);
+                 validator.customValidator(request, jsonPath, rules);
 
             }
         }

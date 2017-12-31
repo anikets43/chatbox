@@ -2,17 +2,15 @@
 	"field": {
 		"validation": [
 			{
-				"name": "context.timestamp",
-				"type": "required"
-			},
-			{
 				"name": "aiProvider.accessToken",
 				"type": "required,hash"
 			},
 			{
-				"name": "data.orgId",
-				"type": "required,alphanumeric"
+				"name": "data.queryText",
+				"type": "required"
 			}
 		]
 	}
 }
+
+

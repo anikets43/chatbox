@@ -1,20 +1,21 @@
 
-function processResponse(request, response) {
-    debugger;
+function processResponse(request, response, isSuccess) {
     const data = request.body;
     var result = {};
+
     result.context = {
-        "timestamp": response.timestamp,
+        "timestamp": response.timestamp || new Date(),
         "version": data['context']['version']
     };
 
     result.result = {
-        "message": response.status.errorType,
-        "statusCode": response.status.code,
+        "message": isSuccess ? 'SUCCESS' : 'SER_ERR',
+        "statusCode": isSuccess ? response.status.code : response.statusCode,
         "error": {
 
         }
     };
+
     result.output = {};
     result.aiResponse = {
         "aiEngine": "dialogflow",
@@ -22,7 +23,6 @@ function processResponse(request, response) {
     }
 
     return result;
-
 }
 
 module.exports = processResponse;

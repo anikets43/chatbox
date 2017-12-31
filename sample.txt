@@ -174,3 +174,122 @@ Heroku
 
 
 yyyy-MM-dd'T'HH:mm:ssZZZ
+
+
+
+TODO
+[09:56, 12/27/2017] Ashish Amex: -- Timestamp Mandatory .. Epoc (Mili second) - Number validation
+-- verion mandatory - float validation
+-- aiProvider.type - mandatory - alphanum
+-- aiProvider.accesstoken - mandatory - alphanum
+-- aiProvider.sessionId - mandatory - alphanum + "-"
+-- data.queryText - Mandatory - shoould not be empty 
+
+
+
+Response - date that should be epoc 
+
+common response always	
+
+
+SUCESS
+
+Code - SUC000
+
+
+FAIL
+
+
+REQ_VAL
+AI_ERR
+DB_ERR
+SER_ERR
+
+
+Invaliid value for $field
+
+
+{
+    "context": {
+        "timestamp": "2017-12-30T16:01:35.949Z",
+        "version": "1.0"
+    },
+    "result": {
+        "message": "success",
+        "statusCode": 200,
+        "error": {}
+    },
+    "output": {},
+    "aiResponse": {
+        "aiEngine": "dialogflow",
+        "response": {
+            "id": "3fae0d5e-a901-446a-bc8f-da2fd678bfcf",
+            "timestamp": "2017-12-30T16:01:35.949Z",
+            "lang": "en",
+            "result": {
+                "source": "agent",
+                "resolvedQuery": "What is weather dasdadad",
+                "action": "",
+                "actionIncomplete": true,
+                "parameters": {
+                    "date": "",
+                    "geo-city": ""
+                },
+                "contexts": [
+                    {
+                        "name": "weather_dialog_params_geo-city",
+                        "parameters": {
+                            "date": "",
+                            "geo-city": "",
+                            "date.original": "",
+                            "geo-city.original": ""
+                        },
+                        "lifespan": 1
+                    },
+                    {
+                        "name": "weather_dialog_context",
+                        "parameters": {
+                            "date": "",
+                            "geo-city": "",
+                            "date.original": "",
+                            "geo-city.original": ""
+                        },
+                        "lifespan": 2
+                    },
+                    {
+                        "name": "3b855eb8-cee4-4652-a595-b28f2dba1ef3_id_dialog_context",
+                        "parameters": {
+                            "date": "",
+                            "geo-city": "",
+                            "date.original": "",
+                            "geo-city.original": ""
+                        },
+                        "lifespan": 2
+                    }
+                ],
+                "metadata": {
+                    "intentId": "3b855eb8-cee4-4652-a595-b28f2dba1ef3",
+                    "webhookUsed": "false",
+                    "webhookForSlotFillingUsed": "false",
+                    "intentName": "weather"
+                },
+                "fulfillment": {
+                    "speech": "For which city do you want to know the weather",
+                    "messages": [
+                        {
+                            "type": 0,
+                            "speech": "For which city do you want to know the weather"
+                        }
+                    ]
+                },
+                "score": 0.949999988079071
+            },
+            "status": {
+                "code": 200,
+                "errorType": "success",
+                "webhookTimedOut": false
+            },
+            "sessionId": "afd1e150-ed7a-11e7-9a47-75b8b75e375f"
+        }
+    }
+}
