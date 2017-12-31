@@ -9,8 +9,9 @@ function processResponse(request, response, isSuccess) {
     };
 
     result.result = {
-        "message": isSuccess ? 'SUCCESS' : 'SER_ERR',
-        "statusCode": isSuccess ? response.status.code : response.statusCode,
+        "message": isSuccess ? 'SUCCESS' : (request.validationErrors().length > 0 ? 'REQ_VAL' : 'SER_ERR'),
+        // "statusCode": isSuccess ? response.status.code : response.statusCode,
+        "statusCode": isSuccess ? 'SUC000' : 'FAIL',        
         "error": {
 
         }

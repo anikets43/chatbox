@@ -293,3 +293,6 @@ Invaliid value for $field
         }
     }
 }
+
+
+https://github.com/ctavan/express-validator/issues/413

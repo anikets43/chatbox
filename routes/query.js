@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var bot = require('apiai');
+const { check, validationResult } = require('express-validator/check');
+const { matchedData, sanitize } = require('express-validator/filter');
 
 var requestParser = require('../components/request/parser');
 const processResponse = require('../components/response/responseHandler');
@@ -10,7 +12,7 @@ router.post("/", function (req, res) {
     const data = req.body;
 
     const requestResult = requestParser.parse(req);
-
+    
     const errors = req.validationErrors();
 
     if (errors) {

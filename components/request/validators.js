@@ -9,22 +9,32 @@ function customValidator(request, jsonPath, rules) {
         switch (rule) {
 
             case 'required':
-                request.check(jsonPath).notEmpty();
+                request.check(jsonPath, `${jsonPath} should not be empty.`).notEmpty();
+                parseErrors(request);
+                break;
+
+            case 'alphanumeric':
+                request.check(jsonPath, `${jsonPath} should contain alphanumeric or hyphen.`).isAlphanumeric();
                 parseErrors(request);
                 break;
 
             case 'hash':
-                request.check(jsonPath).isAlphanumeric();
+                request.check(jsonPath, `${jsonPath} should contain alphanumeric or hyphen.`).matches(/^[a-zA-Z0-9-_]+$/);
+                parseErrors(request);
+                break;
+
+            case 'version':
+                request.check(jsonPath, `${jsonPath} is Invalid value.`).matches(/^(\d+\.)?(\d+\.)?(\*|\d+)$/);
                 parseErrors(request);
                 break;
 
             case 'number':
-                request.check(jsonPath).matches(/\d/);
+                request.check(jsonPath, `${jsonPath} should be a number.`).matches(/\d/);
                 parseErrors(request);
                 break;
 
             case 'email':
-                request.check(jsonPath).isEmail();
+                request.check(jsonPath, `${jsonPath} should be email.`).isEmail();
                 parseErrors(request);
                 break;
 
