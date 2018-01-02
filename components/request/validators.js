@@ -13,6 +13,11 @@ function customValidator(request, jsonPath, rules) {
                 parseErrors(request);
                 break;
 
+            case 'date':
+                request.check(jsonPath, `${jsonPath} should be a date.`).isISO8601();
+                parseErrors(request);
+                break;
+
             case 'alphanumeric':
                 request.check(jsonPath, `${jsonPath} should contain alphanumeric or hyphen.`).isAlphanumeric();
                 parseErrors(request);

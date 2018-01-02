@@ -20,6 +20,10 @@
 			{
 				"name": "data.queryText",
 				"type": "required"
+			},
+			{
+				"name": "context.timestamp",
+				"type": "date"
 			}
 		]
 	}
