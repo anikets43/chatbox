@@ -9,11 +9,11 @@ function processResponse(request, response, isSuccess) {
     };
 
     result.result = {
-        "message": isSuccess ? 'SUCCESS' : (request.validationErrors().length > 0 ? 'REQ_VAL' : 'SER_ERR'),
-        // "statusCode": isSuccess ? response.status.code : response.statusCode,
-        "statusCode": isSuccess ? 'SUC000' : 'FAIL',        
+        "message": isSuccess ? 'SUCCESS' : 'FAIL',
+        "statusCode": isSuccess ? 'SUC000' : (request.validationErrors().length > 0 ? 'REQ_VAL' : 'SER_ERR'),
         "error": {
-
+            "errorType": isSuccess ? response.status.code : response.statusCode,
+            "errorDetails": ''
         }
     };
 
