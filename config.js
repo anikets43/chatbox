@@ -14,5 +14,6 @@ module.exports = {
     basicAuth: {
         username: 'testuser',
         password: 'testpass'
-    }
+    },
+    externalUrlEndpoint: 'https://reqres.in/api/unknown/2'
 }

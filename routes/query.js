@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bot = require('apiai');
-const { check, validationResult } = require('express-validator/check');
-const { matchedData, sanitize } = require('express-validator/filter');
+var restClient = require('../utils/restClient');
 
 var requestParser = require('../components/request/parser');
 const processResponse = require('../components/response/responseHandler');
@@ -12,7 +11,7 @@ router.post("/", function (req, res) {
     const data = req.body;
 
     const requestResult = requestParser.parse(req);
-    
+
     const errors = req.validationErrors();
 
     if (errors) {
@@ -22,7 +21,6 @@ router.post("/", function (req, res) {
         const context = data['context'];
         const aiProvider = data['aiProvider'];
         const userData = data['data'];
-
 
         // Read the configuration for validation rules and apply validation on properties.
         // If validation rules fails, return the error context and terminate the request.
@@ -39,8 +37,20 @@ router.post("/", function (req, res) {
         // Callback on request process
         request.on('response', function (response) {
             // Validation on Score and further API call decision.
-            const result = processResponse(req, response, true);
-            res.send(result);
+
+            const parameters = response.result.parameters;
+            let params = '?';
+
+            for (const key in parameters) {
+                const val = `${parameters[key]}` ? `${parameters[key]}` : null;
+                params += `${key}=${val}` + '&';
+            }
+
+            params = params.slice(0, - 1);
+            restClient.get(params).then(data => {
+                const result = processResponse(req, response, data, true);
+                res.send(result);
+            });
         });
 
         // Callback on Server Error

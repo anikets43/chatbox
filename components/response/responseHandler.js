@@ -1,5 +1,5 @@
 
-function processResponse(request, response, isSuccess) {
+function processResponse(request, response, apiOutput, isSuccess) {
     const data = request.body;
     var result = {};
 
@@ -7,6 +7,8 @@ function processResponse(request, response, isSuccess) {
         "timestamp": response.timestamp || new Date(),
         "version": data['context']['version']
     };
+
+    result.output =  apiOutput;
 
     result.result = {
         "message": isSuccess ? 'SUCCESS' : 'FAIL',
@@ -17,7 +19,6 @@ function processResponse(request, response, isSuccess) {
         }
     };
 
-    result.output = {};
     result.aiResponse = {
         "aiEngine": "dialogflow",
         "response": response
