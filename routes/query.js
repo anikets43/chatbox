@@ -7,6 +7,11 @@ var requestParser = require('../components/request/parser');
 const processResponse = require('../components/response/responseHandler');
 const uuidv1 = require('uuid/v1');
 
+router.get("/", function (req, res) {
+    res.send('Testing GET');
+});
+
+
 router.post("/", function (req, res) {
     const data = req.body;
 
