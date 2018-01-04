@@ -1,26 +1,22 @@
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-const config = require('../config');
-
-const baseUrl = config.externalUrlEndpoint;
-
-function get(params) {
-    console.log('GET METHOD: ' + baseUrl + params);
+function get(url) {
+    console.log('GET METHOD: ' + url);
     return new Promise((resolve, reject) => {
-        client.get(baseUrl + params, function (data, response) {
+        client.get(url, function (data, response) {
             resolve(data);
         });
     })
 }
 
-function post(data) {
+function post(url, data) {
     var args = {
         data: data,
         headers: { "Content-Type": "application/json" }
     };
     return new Promise((resolve, reject) => {
-        client.post(baseUrl, args, function (data, response) {
+        client.post(url, args, function (data, response) {
             resolve(data);
         });
     })

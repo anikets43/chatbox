@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var bot = require('apiai');
 var restClient = require('../utils/restClient');
+var Intent = require('../models/intent')
+var helper = require('../utils/helper');
 
 var requestParser = require('../components/request/parser');
 const processResponse = require('../components/response/responseHandler');
@@ -14,11 +16,9 @@ router.get("/", function (req, res) {
 
 router.post("/", function (req, res) {
     const data = req.body;
-
     const requestResult = requestParser.parse(req);
 
     const errors = req.validationErrors();
-
     if (errors) {
         const result = processResponse(req, errors, false);
         res.send(result);
@@ -42,20 +42,34 @@ router.post("/", function (req, res) {
         // Callback on request process
         request.on('response', function (response) {
             // Validation on Score and further API call decision.
-
             const parameters = response.result.parameters;
-            let params = '?';
+            const isValid = Object.values(parameters).indexOf('') == 1;
+            const intentName = response.result.metadata.intentName || '';
 
-            for (const key in parameters) {
-                const val = `${parameters[key]}` ? `${parameters[key]}` : null;
-                params += `${key}=${val}` + '&';
+            if (intentName && isValid) {
+                Intent.findOne({ name: intentName }).then(result => {
+                    if (result.type === "GET") {
+                        const params = helper.parseParam(parameters);
+                        restClient.get(result.url + params).then(data => {
+                            const result = processResponse(req, response, data, true);
+                            res.send(result);
+                        });
+                    }
+                    else if (result.type === "POST") {
+                        const data = {
+                            "12": "morpheus",
+                            "12121": "leader"
+                        };
+                        restClient.post(result.url, data).then(data => {
+                            const result = processResponse(req, response, data, true);
+                            res.send(result);
+                        })
+                    } else {
+                        const result = processResponse(req, response, null, true);
+                        res.send(result);
+                    }
+                })
             }
-
-            params = params.slice(0, - 1);
-            restClient.get(params).then(data => {
-                const result = processResponse(req, response, data, true);
-                res.send(result);
-            });
         });
 
         // Callback on Server Error
@@ -69,4 +83,8 @@ router.post("/", function (req, res) {
     }
 });
 
+function parseParam(params) {
+
+
+}
 module.exports = router;

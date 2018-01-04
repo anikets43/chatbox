@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.Promise = global.Promise;
 
 function connect(dbUrl, cb) {
     mongoose.connect(dbUrl, { useMongoClient: true })

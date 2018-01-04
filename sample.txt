@@ -296,3 +296,24 @@ Invaliid value for $field
 
 
 https://github.com/ctavan/express-validator/issues/413
+
+
+
+{
+    "_id": {
+        "$oid": "5a4df510734d1d089c5a6300"
+    },
+    "name": "weather",
+    "type": "GET",
+    "url": "https://reqres.in/api/unknown/2"
+}
+ 
+
+{
+    "_id": {
+        "$oid": "5a4df530734d1d089c5a630c"
+    },
+    "name": "cricket",
+    "type": "POST",
+    "url": "https://reqres.in/api/unknown/2"
+}
