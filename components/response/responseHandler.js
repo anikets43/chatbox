@@ -8,20 +8,18 @@ function processResponse(request, response, apiOutput, isSuccess) {
         "version": data['context']['version']
     };
 
-    result.output =  apiOutput;
+    result.output = apiOutput;
 
     result.result = {
         "message": isSuccess ? 'SUCCESS' : 'FAIL',
         "statusCode": isSuccess ? 'SUC000' : (request.validationErrors().length > 0 ? 'REQ_VAL' : 'SER_ERR'),
-        "error": {
-            "errorType": isSuccess ? response.status.code : response.statusCode,
-            "errorDetails": ''
+        "error": isSuccess ? [] : {
+            "errorDetails": response
         }
     };
-
     result.aiResponse = {
         "aiEngine": "dialogflow",
-        "response": response
+        "response": isSuccess ? response : {}
     }
 
     return result;

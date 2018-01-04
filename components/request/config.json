@@ -15,7 +15,7 @@
 			},
 			{
 				"name": "aiProvider.sessionId",
-				"type": "required,hash"
+				"type": "hash"
 			},
 			{
 				"name": "data.queryText",

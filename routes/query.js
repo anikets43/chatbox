@@ -15,12 +15,13 @@ router.get("/", function (req, res) {
 
 
 router.post("/", function (req, res) {
+
     const data = req.body;
     const requestResult = requestParser.parse(req);
 
     const errors = req.validationErrors();
     if (errors) {
-        const result = processResponse(req, errors, false);
+        const result = processResponse(req, errors, {}, false);
         res.send(result);
     } else {
         const context = data['context'];
@@ -43,7 +44,7 @@ router.post("/", function (req, res) {
         request.on('response', function (response) {
             // Validation on Score and further API call decision.
             const parameters = response.result.parameters;
-            const isValid = Object.values(parameters).indexOf('') == 1;
+            const isValid = Object.values(parameters).indexOf('') === -1;
             const intentName = response.result.metadata.intentName || '';
 
             if (intentName && isValid) {
@@ -64,11 +65,16 @@ router.post("/", function (req, res) {
                             const result = processResponse(req, response, data, true);
                             res.send(result);
                         })
-                    } else {
-                        const result = processResponse(req, response, null, true);
+                    }
+                    else {
+                        const result = processResponse(req, response, {}, true);
                         res.send(result);
                     }
                 })
+            }
+            else {
+                const result = processResponse(req, response, {}, true);
+                res.send(result);
             }
         });
 
@@ -83,8 +89,4 @@ router.post("/", function (req, res) {
     }
 });
 
-function parseParam(params) {
-
-
-}
 module.exports = router;

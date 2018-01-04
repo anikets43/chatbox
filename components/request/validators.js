@@ -24,7 +24,8 @@ function customValidator(request, jsonPath, rules) {
                 break;
 
             case 'hash':
-                request.check(jsonPath, `${jsonPath} should contain alphanumeric or hyphen.`).matches(/^[a-zA-Z0-9-_]+$/);
+                request.check(jsonPath, `${jsonPath} should contain alphanumeric or hyphen.`)
+                .optional({ checkFalsy: true }).matches(/^[a-zA-Z0-9-_]+$/);
                 parseErrors(request);
                 break;
 
