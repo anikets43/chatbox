@@ -42,9 +42,10 @@ router.post("/", function (req, res) {
 
         // Callback on request process
         request.on('response', function (response) {
+            
             // Validation on Score and further API call decision.
             const parameters = response.result.parameters;
-            const isValid = Object.values(parameters).indexOf('') === -1;
+            const isValid = parameters ? Object.values(parameters).indexOf('') === -1 : false;
             const intentName = response.result.metadata.intentName || '';
 
             if (intentName && isValid) {
@@ -80,6 +81,7 @@ router.post("/", function (req, res) {
 
         // Callback on Server Error
         request.on('error', function (error) {
+            debugger;
             const result = processResponse(req, error, false);
             res.send(result);
             //throw new Error(error.responseBody);
