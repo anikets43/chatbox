@@ -7,9 +7,9 @@ function processResponse(request, response, apiOutput, isSuccess) {
         "timestamp": response.timestamp || new Date(),
         "version": data['context']['version']
     };
-
+ 
     result.uiOutput = {
-        "result": apiOutput ? JSON.stringify(apiOutput) : (isSuccess ? response.result.fulfillment['speech'] : '')
+        "result": Object.keys(apiOutput ).length ? JSON.stringify(apiOutput) : (isSuccess ? response.result.fulfillment['speech'] : '')
     };
 
     result.restOutput = apiOutput;
