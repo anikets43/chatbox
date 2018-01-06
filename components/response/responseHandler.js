@@ -8,7 +8,11 @@ function processResponse(request, response, apiOutput, isSuccess) {
         "version": data['context']['version']
     };
 
-    result.output = apiOutput;
+    result.uiOutput = {
+        "result": apiOutput ? JSON.stringify(apiOutput) : (isSuccess ? response.result.fulfillment['speech'] : '')
+    };
+
+    result.restOutput = apiOutput;
 
     result.result = {
         "message": isSuccess ? 'SUCCESS' : 'FAIL',

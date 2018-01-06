@@ -42,16 +42,19 @@ router.post("/", function (req, res) {
 
         // Callback on request process
         request.on('response', function (response) {
-            
+
             // Validation on Score and further API call decision.
             const parameters = response.result.parameters;
-            const isValid = parameters ? Object.values(parameters).indexOf('') === -1 : false;
-            const intentName = response.result.metadata.intentName || '';
+            const actionIncomplete = response.result.actionIncomplete;
 
-            if (intentName && isValid) {
+            const intentName = response.result.metadata.intentName || '';
+            if (intentName && !actionIncomplete) {
                 Intent.findOne({ name: intentName }).then(result => {
                     if (result.type === "GET") {
+
                         const params = helper.parseParam(parameters);
+
+                        console.log(params);
                         restClient.get(result.url + params).then(data => {
                             const result = processResponse(req, response, data, true);
                             res.send(result);
@@ -81,7 +84,6 @@ router.post("/", function (req, res) {
 
         // Callback on Server Error
         request.on('error', function (error) {
-            debugger;
             const result = processResponse(req, error, false);
             res.send(result);
             //throw new Error(error.responseBody);
