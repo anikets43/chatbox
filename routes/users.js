@@ -1,12 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const User = require('../models/user');
 
-var User = mongoose.model('User');
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
+router.post('/', function (req, res, next) {
+  var newUser = new User({
+    userName: 'near3bot',
+    password: 'Password@01',
+  });
+
+  newUser.save(function (err) {
+    if (err) throw err;
+
+    console.log('User saved successfully');
+    res.json({ success: true });
+  });
 });
 
 
