@@ -46,16 +46,16 @@ router.post("/", function (req, res) {
             // Validation on Score and further API call decision.
             const parameters = response.result.parameters;
             const actionIncomplete = response.result.actionIncomplete;
-
             const intentName = response.result.metadata.intentName || '';
+
             if (intentName && !actionIncomplete) {
                 Intent.findOne({ name: intentName }).then(result => {
+                    
+                    const auth_type = result._doc['auth_type'] || null;
+
                     if (result.type === "GET") {
-
                         const params = helper.parseParam(parameters);
-
-                        console.log(params);
-                        restClient.get(result.url + params).then(data => {
+                        restClient.get(result.url + params, auth_type).then(data => {
                             const result = processResponse(req, response, data, true);
                             res.send(result);
                         });
@@ -65,7 +65,8 @@ router.post("/", function (req, res) {
                             "12": "morpheus",
                             "12121": "leader"
                         };
-                        restClient.post(result.url, data).then(data => {
+
+                        restClient.post(result.url, data, auth_type).then(data => {
                             const result = processResponse(req, response, data, true);
                             res.send(result);
                         })
