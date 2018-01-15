@@ -1,37 +1,37 @@
-var Client = require('node-rest-client').Client;
-var client = new Client();
+const axios = require('axios');
 
 function get(url, auth) {
 
     return getHeader(auth).then(data => {
         var headers = data;
         return new Promise((resolve, reject) => {
-            client.get(url, { headers: headers }, function (data, response) {
-                resolve(data);
-            });
-        })
+            axios.get(url, { headers: headers })
+                .then(response => {
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    resolve(error);
+                });
+        });
     });
 }
 
 function post(url, data, auth) {
-
-    return getHeader(auth).then(data => {
-        var headers = data;
-        var args = {
-            data: data,
-            headers: headers
-        };
+    return getHeader(auth).then(headers => {
         return new Promise((resolve, reject) => {
-            client.post(url, args, function (data, response) {
-                resolve(data);
-            });
+            axios.post(url, data, { headers: headers })
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    resolve(error);
+                });
         })
     });
 }
 
 function getHeader(auth) {
     let headers = {
-        'Accept': 'application/json',
         'Content-Type': 'application/json'
     };
 
@@ -48,10 +48,9 @@ function getHeader(auth) {
 
             case 'OAUTH':
                 var args = {
-                    data: auth.data,
+                    data: auth.value,
                     headers: { "Content-Type": "application/json" }
                 };
-
                 client.post(auth.value['url'], args, function (data, response) {
                     headers['Authorization'] = data.token_type + ' ' + data.access_token;
                     resolve(headers);
