@@ -47,14 +47,14 @@ function getHeader(auth) {
                 break;
 
             case 'OAUTH':
-                var args = {
-                    data: auth.value,
-                    headers: { "Content-Type": "application/json" }
-                };
-                client.post(auth.value['url'], args, function (data, response) {
-                    headers['Authorization'] = data.token_type + ' ' + data.access_token;
-                    resolve(headers);
-                });
+                axios.post(auth.value['url'],  auth.value, { headers: { "Content-Type": "application/json" } })
+                    .then(function (response) {
+                        headers['Authorization'] = response.data.token_type + ' ' + response.data.access_token;
+                        resolve(headers);
+                    })
+                    .catch(function (error) {
+                        resolve(error);
+                    });
                 break;
         }
     });
