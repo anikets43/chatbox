@@ -1,8 +1,8 @@
 const axios = require('axios');
 
-function get(url, auth) {
+function get(url, auth, additionalHeader) {
 
-    return getHeader(auth).then(data => {
+    return getHeader(auth, additionalHeader).then(data => {
         var headers = data;
         return new Promise((resolve, reject) => {
             axios.get(url, { headers: headers })
@@ -10,30 +10,34 @@ function get(url, auth) {
                     resolve(response.data);
                 })
                 .catch(error => {
-                    resolve(error);
+                    reject(error);
                 });
         });
     });
 }
 
-function post(url, data, auth) {
-    return getHeader(auth).then(headers => {
+function post(url, data, auth, additionalHeader) {
+    return getHeader(auth, additionalHeader).then(headers => {
         return new Promise((resolve, reject) => {
             axios.post(url, data, { headers: headers })
                 .then(function (response) {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    resolve(error);
+                    reject(error);
                 });
-        })
+        });
     });
 }
 
-function getHeader(auth) {
+function getHeader(auth, additionalHeader) {
     let headers = {
         'Content-Type': 'application/json'
     };
+
+    additionalHeader.forEach(element => {
+        headers[element.name] = element.value
+    });
 
     return new Promise((resolve, reject) => {
         switch (auth.type) {
@@ -47,13 +51,13 @@ function getHeader(auth) {
                 break;
 
             case 'OAUTH':
-                axios.post(auth.value['url'],  auth.value, { headers: { "Content-Type": "application/json" } })
+                axios.post(auth.value['url'], auth.value, { headers: { "Content-Type": "application/json" } })
                     .then(function (response) {
                         headers['Authorization'] = response.data.token_type + ' ' + response.data.access_token;
                         resolve(headers);
                     })
                     .catch(function (error) {
-                        resolve(error);
+                        reject(error);
                     });
                 break;
         }

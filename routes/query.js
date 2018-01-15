@@ -52,10 +52,12 @@ router.post("/", function (req, res) {
                 Intent.findOne({ name: intentName }).then(result => {
                     
                     const auth_type = result._doc['auth_type'] || null;
+                    const additionalHeader = result._doc['headers'] || null;
 
                     if (result.type === "GET") {
+
                         const params = helper.parseParam(parameters);
-                        restClient.get(result.url + params, auth_type).then(data => {
+                        restClient.get(result.url + params, auth_type, additionalHeader).then(data => {
                             const result = processResponse(req, response, data, true);
                             res.send(result);
                         });
@@ -66,7 +68,7 @@ router.post("/", function (req, res) {
                             "12121": "leader"
                         };
 
-                        restClient.post(result.url, data, auth_type).then(data => {
+                        restClient.post(result.url, data, auth_type, additionalHeader).then(data => {
                             const result = processResponse(req, response, data, true);
                             res.send(result);
                         })

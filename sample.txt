@@ -397,3 +397,29 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE1ODI0ODg0LCJ
     ],
     "__v": 0
 }
+
+
+{
+    "_id": {
+        "$oid": "5a59f5f3734d1d347182d3f0"
+    },
+    "name": "cricket",
+    "type": "POST",
+    "url": "https://reqres.in/api/unknown/2",
+    "auth_type": {
+        "type": "OAUTH",
+        "value": {
+            "url": "https://anikets43.auth0.com/oauth/token",
+            "client_id": "mwNG7dekF14r2uGuyKn0HF4ucpJkPuLN",
+            "client_secret": "bhU9qg8G1dGN29WZ30nUI4v5vP5itzZZ3FSAlJA6rcL8g-2zzTAA80RVMawHn_3S",
+            "audience": "https://anikets43.auth0.com/api/v2/",
+            "grant_type": "client_credentials"
+        }
+    },
+    "headers": [
+        {
+            "name": "Content_Type",
+            "value": "application/json"
+        }
+    ]
+}
