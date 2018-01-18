@@ -50,28 +50,30 @@ router.post("/", function (req, res) {
 
             if (intentName && !actionIncomplete) {
                 Intent.findOne({ name: intentName }).then(result => {
-                    
-                    const auth_type = result._doc['auth_type'] || null;
-                    const additionalHeader = result._doc['headers'] || null;
 
-                    if (result.type === "GET") {
+                    if (result) {
+                        const auth_type = result._doc['auth_type'] || null;
+                        const additionalHeader = result._doc['headers'] || null;
 
-                        const params = helper.parseParam(parameters);
-                        restClient.get(result.url + params, auth_type, additionalHeader).then(data => {
-                            const result = processResponse(req, response, data, true);
-                            res.send(result);
-                        });
-                    }
-                    else if (result.type === "POST") {
-                        const data = {
-                            "12": "morpheus",
-                            "12121": "leader"
-                        };
+                        if (result.type === "GET") {
 
-                        restClient.post(result.url, data, auth_type, additionalHeader).then(data => {
-                            const result = processResponse(req, response, data, true);
-                            res.send(result);
-                        })
+                            const params = helper.parseParam(parameters);
+                            restClient.get(result.url + params, auth_type, additionalHeader).then(data => {
+                                const result = processResponse(req, response, data, true);
+                                res.send(result);
+                            });
+                        }
+                        else if (result.type === "POST") {
+                            const data = {
+                                "12": "morpheus",
+                                "12121": "leader"
+                            };
+
+                            restClient.post(result.url, data, auth_type, additionalHeader).then(data => {
+                                const result = processResponse(req, response, data, true);
+                                res.send(result);
+                            })
+                        }
                     }
                     else {
                         const result = processResponse(req, response, {}, true);
