@@ -22,7 +22,6 @@ function processResponse(request, response, apiOutput, isSuccess) {
         }
     };
     result.aiResponse = {
-        "aiEngine": "dialogflow",
         "response": isSuccess ? response : {}
     }
 

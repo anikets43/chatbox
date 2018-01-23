@@ -57,8 +57,9 @@ router.post("/", function (req, res) {
 
                         if (result.type === "GET") {
 
-                            const params = helper.parseParam(parameters);
-                            restClient.get(result.url + params, auth_type, additionalHeader).then(data => {
+                            const url = helper.parseParam(result.url, parameters);
+
+                            restClient.get(url, auth_type, additionalHeader).then(data => {
                                 const result = processResponse(req, response, data, true);
                                 res.send(result);
                             });

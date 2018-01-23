@@ -1,12 +1,13 @@
-function parseParam(parameters) {
-    let params = '?';
+function parseParam(url, parameters) {
 
     for (const key in parameters) {
-        const val = `${parameters[key]}` ? `${parameters[key]}` : null;
-        params += `${key}=${val}` + '&';
+        if (parameters.hasOwnProperty(key)) {
+            const element = parameters[key];
+            url = url.replace(`{${key}}`, element);
+        }
     }
 
-    return params.slice(0, - 1);
+    return url;
 }
 
 module.exports = {
