@@ -48,6 +48,9 @@ router.post("/", function (req, res) {
             const actionIncomplete = response.result.actionIncomplete;
             const intentName = response.result.metadata.intentName || '';
 
+            // Concat the parameters
+            let params = Object.assign({}, userData['backendParams'], parameters);
+
             if (intentName && !actionIncomplete) {
                 Intent.findOne({ name: intentName }).then(result => {
 
@@ -57,7 +60,7 @@ router.post("/", function (req, res) {
 
                         if (result.type === "GET") {
 
-                            const url = helper.parseParam(result.url, parameters);
+                            const url = helper.parseParam(result.url, params);
 
                             restClient.get(url, auth_type, additionalHeader).then(data => {
                                 const result = processResponse(req, response, data, true);
