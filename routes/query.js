@@ -47,12 +47,13 @@ router.post("/", function (req, res) {
             const parameters = response.result.parameters;
             const actionIncomplete = response.result.actionIncomplete;
             const intentName = response.result.metadata.intentName || '';
+            const actionName = response.result.action;
 
             // Concat the parameters
             let params = Object.assign({}, userData['backendParams'], parameters);
 
             if (intentName && !actionIncomplete) {
-                Intent.findOne({ name: intentName }).then(result => {
+                Intent.findOne({ name: actionName }).then(result => {
 
                     if (result) {
                         const auth_type = result._doc['auth_type'] || null;
