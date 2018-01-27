@@ -70,8 +70,8 @@ router.post("/", function (req, res) {
                         }
                         else if (result.type === "POST") {
                             const data = {
-                                "12": "morpheus",
-                                "12121": "leader"
+                                "name": "morpheus",
+                                "design": "leader"
                             };
 
                             restClient.post(result.url, data, auth_type, additionalHeader).then(data => {
