@@ -4,6 +4,7 @@ var bot = require('apiai');
 var restClient = require('../utils/restClient');
 var Intent = require('../models/intent')
 var helper = require('../utils/helper');
+var Organization = require('../models/organization');
 
 var requestParser = require('../components/request/parser');
 const processResponse = require('../components/response/responseHandler');
@@ -47,14 +48,13 @@ router.post("/", function (req, res) {
             const parameters = response.result.parameters;
             const actionIncomplete = response.result.actionIncomplete;
             const intentName = response.result.metadata.intentName || '';
-            const actionName = response.result.action;
+            const actionName = response.result.action || null;
 
             // Concat the parameters
             let params = Object.assign({}, userData['backendParams'], parameters);
 
             if (intentName && !actionIncomplete) {
                 Intent.findOne({ name: actionName }).then(result => {
-
                     if (result) {
                         const auth_type = result._doc['auth_type'] || null;
                         const additionalHeader = result._doc['headers'] || null;
@@ -74,7 +74,7 @@ router.post("/", function (req, res) {
 
                             for (const key in payload) {
                                 if (payload.hasOwnProperty(key)) {
-                                    const value = params[key]; 
+                                    const value = params[key];
                                     payload[key] = value;
                                 }
                             }
@@ -88,8 +88,12 @@ router.post("/", function (req, res) {
                         }
                     }
                     else {
-                        const result = processResponse(req, response, {}, true);
-                        res.send(result);
+                        const orgId = userData['orgId'];
+                        Organization.findOne({ name: orgId }).then(response2 => {
+                            var returnText = response2 ? response2['defaultValue'] : 'This is the global default message.'
+                            const result = processResponse(req, response, returnText, true);
+                            res.send(result);
+                        });
                     }
                 })
             }
