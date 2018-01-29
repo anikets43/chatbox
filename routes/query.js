@@ -63,18 +63,25 @@ router.post("/", function (req, res) {
 
                             const url = helper.parseParam(result.url, params);
 
+
                             restClient.get(url, auth_type, additionalHeader).then(data => {
                                 const result = processResponse(req, response, data, true);
                                 res.send(result);
                             });
                         }
                         else if (result.type === "POST") {
-                            const data = {
-                                "name": "morpheus",
-                                "design": "leader"
-                            };
+                            let payload = result._doc['payload'] || null;
 
-                            restClient.post(result.url, data, auth_type, additionalHeader).then(data => {
+                            for (const key in payload) {
+                                if (payload.hasOwnProperty(key)) {
+                                    const value = params[key]; 
+                                    payload[key] = value;
+                                }
+                            }
+
+                            const url = helper.parseParam(result.url, params);
+
+                            restClient.post(url, payload, auth_type, additionalHeader).then(data => {
                                 const result = processResponse(req, response, data, true);
                                 res.send(result);
                             })
