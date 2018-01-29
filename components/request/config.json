@@ -24,6 +24,10 @@
 			{
 				"name": "context.timestamp",
 				"type": "date"
+			},
+			{
+				"name": "data.orgId",
+				"type": "alphanumeric"
 			}
 		]
 	}
